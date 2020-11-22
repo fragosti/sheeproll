@@ -75,9 +75,9 @@ const Application: React.SFC<{}> = () => {
   const [lastRoll, setLastRoll] = useState<undefined | number>();
   const onRollClick = (shouldPersistLastRoll: boolean) => {
     let roll = randomRoll();
-    while (rollData[roll - 2] + 1 > maxRollBeforeReset[roll]) {
-      roll = randomRoll();
-    }
+    // while (rollData[roll - 2] + 1 > maxRollBeforeReset[roll]) {
+    //   roll = randomRoll();
+    // }
     if (shouldPersistLastRoll) {
       const newRollData = [...rollData];
       const rollIndex = lastRoll - 2;
@@ -85,10 +85,10 @@ const Application: React.SFC<{}> = () => {
       setRollData(newRollData);
       const newTotalRolls = totalRolls + 1;
       setTotalRolls(newTotalRolls);
-      if (totalRolls % 36 === 0) {
-        // reset
-        setRollData(startingRollData);
-      }
+      // if (totalRolls % 36 === 0) {
+      //   // reset
+      //   setRollData(startingRollData);
+      // }
     }
     setLastRoll(roll);
   } 
