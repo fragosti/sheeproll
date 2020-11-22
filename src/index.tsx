@@ -98,7 +98,7 @@ const Application: React.SFC<{}> = () => {
       <Logo src={logoImg}/>
       <RollContainer>
         <Roll onClick={() => onRollClick(true)}>Roll</Roll>
-        <Roll onClick={() => onRollClick(true)}>Re-roll</Roll>
+        <Roll onClick={() => onRollClick(false)}>Re-roll</Roll>
       </RollContainer>
       {lastRoll &&
           <LastRoll>{lastRoll}</LastRoll>
