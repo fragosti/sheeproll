@@ -38,6 +38,11 @@ const LastRoll = styled.h2`
   font-size: 96px;
 `
 
+const TotalRoll = styled.h2`
+  font: serif;
+  font-size: 36px;
+`
+
 //                 2       3     4      5      6      7      8      9      10     11     12     
 //                 0       1     2      3      4      5      6      7       8     9      10   
 type RollData = [number,number,number,number,number,number,number,number,number,number,number];
@@ -65,15 +70,25 @@ const randomRoll = () => {
 }
 
 const Application: React.SFC<{}> = () => {
+  const [totalRolls, setTotalRolls] = useState<number>(0);
   const [rollData, setRollData] = useState<RollData>(startingRollData);
   const [lastRoll, setLastRoll] = useState<undefined | number>();
   const onRollClick = (shouldPersistLastRoll: boolean) => {
-    const roll = randomRoll();
+    let roll = randomRoll();
+    while (rollData[roll - 2] + 1 > maxRollBeforeReset[roll]) {
+      roll = randomRoll();
+    }
     if (shouldPersistLastRoll) {
       const newRollData = [...rollData];
       const rollIndex = lastRoll - 2;
       newRollData[rollIndex] += 1; 
       setRollData(newRollData);
+      const newTotalRolls = totalRolls + 1;
+      setTotalRolls(newTotalRolls);
+      if (totalRolls % 36 === 0) {
+        // reset
+        setRollData(startingRollData);
+      }
     }
     setLastRoll(roll);
   } 
@@ -98,6 +113,7 @@ const Application: React.SFC<{}> = () => {
           strokeColor: '#fffbc9'
         }}
       />
+      <TotalRoll>Total Rolls: {totalRolls}</TotalRoll>
     </Container>
   )
 }
